@@ -1,6 +1,9 @@
 language: python
 python:
   - "3.2"
+  - "3.3"
+  - "3.4"
 install:
-    - pip install --use-mirrors -r test-requirements.pip
-script: nosetests
+    - pip install tox
+script:
+    - tox -e "$( echo py"$TRAVIS_PYTHON_VERSION" | tr -d . )"
