@@ -36,7 +36,7 @@ class Table(object):
     :param bool include_index: Include the index when outputting.
     :param xltable.TableStyle style: Table style, or one of the named styles 'default' or 'plain'.
     :param xltable.CellStyle column_styles: Dictionary of column names to styles or named styles.
-    :param float column_widths: Dictionary of column names to widths.
+    :param dict column_widths: Dictionary of column names to widths.
     :param xltable.CellStyle header_style: Style or named style to use for the cells in the header row.
     :param xltable.CellStyle index_style: Style or named style to use for the cells in the index column.
 
@@ -204,7 +204,7 @@ class Table(object):
     def get_data(self, workbook, row, col, formula_values={}):
         """
         :return: 2d numpy array for this table with any formulas resolved to the final
-        excel formula.
+                 excel formula.
         :param xltable.Workbook workbook: Workbook the table has been added to.
         :param int row: Row where the table will start in the sheet (used for resolving formulas).
         :param int col: Column where the table will start in the sheet (used for resolving formulas).
@@ -340,7 +340,7 @@ class ArrayFormula(Table):
     :param bool include_index: Include the index when outputting `value`.
     :param xltable.TableStyle style: Table style, or one of the named styles 'default' or 'plain'.
     :param xltable.CellStyle column_styles: Dictionary of column names to styles or named styles.
-    :param float column_widths: Dictionary of column names to widths.
+    :param dict column_widths: Dictionary of column names to widths.
     """
 
     def __init__(self,
