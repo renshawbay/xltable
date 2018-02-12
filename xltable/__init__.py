@@ -101,6 +101,8 @@ Classes
 
 .. autoclass:: ArrayExpression
 
+.. autoclass:: ArrayConstant
+
 .. autoclass:: Cell
 
 .. autoclass:: Column
@@ -118,7 +120,7 @@ Classes
 .. autoclass:: Value
 
 """
-from .expression import Column, Index, Cell, Range, Formula, ConstExpr, Expression, ArrayExpression
+from .expression import Column, Index, Cell, Range, Formula, ConstExpr, Expression, ArrayExpression, ArrayConstant
 from .style import CellStyle, TableStyle
 from .table import Table, Value, ArrayFormula
 from .chart import Chart
@@ -143,4 +145,5 @@ __all__ = [
     "Formula",
     "ArrayExpression",
     "ConstExpr",
+    "ArrayConstant"
 ]
