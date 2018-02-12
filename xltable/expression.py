@@ -207,7 +207,7 @@ class Range(Expression):
     :param left_col: Left most column label this refers to.
     :param right_col: Right most column label this refers to.
     :param top_row: Top most row label, or None to select from the top of the table.
-    :param bottom_row: Bottom most row label, or None to select to the bottom of the table.
+    :param bottom_row: Bottom most row label, or None to select to the bottom of the table, or False to select single row
     :param include_header: Include table header in the range.
     :param table: Name of table the column is in, if not in the same table this expression is in.
                   Use "%s!%s" % (worksheet.name, table.name) if refering to a table in another worksheet
@@ -247,6 +247,8 @@ class Range(Expression):
 
         if self.__bottom is None:
             bottom_row_offset = table.height - 1
+        elif self.__bottom is False:
+            bottom_row_offset = top_row_offset
         else:
             bottom_row_offset = table.get_row_offset(self.__bottom)
 
@@ -353,6 +355,21 @@ class ConstExpr(Expression):
         if isinstance(self.__value, bool):
             return "TRUE" if self.__value else "FALSE"
         return str(self.__value)
+
+
+class ArrayConstant(Expression):
+    """
+    An evaluated array, an "Array Constant". Can increase performance and/or
+    reduce dependencies
+    """
+    def __init__(self, array, **kwargs):
+        super(ArrayConstant, self).__init__(**kwargs)
+        self.value = array
+        self.__value = array
+
+    def resolve(self, workbook, row, col):
+        arr_str = ";".join(",".join(map(str,row)) for row in self.__value)
+        return "{%s}" % arr_str
 
 
 def _to_addr(worksheet, row, col, row_fixed=False, col_fixed=False):
