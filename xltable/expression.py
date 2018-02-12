@@ -357,6 +357,21 @@ class ConstExpr(Expression):
         return str(self.__value)
 
 
+class ArrayConstant(Expression):
+    """
+    An evaluated array, an "Array Constant". Can increase performance and/or
+    reduce dependencies
+    """
+    def __init__(self, array, **kwargs):
+        super(ArrayConstant, self).__init__(**kwargs)
+        self.value = array
+        self.__value = array
+
+    def resolve(self, workbook, row, col):
+        arr_str = ";".join(",".join(map(str,row)) for row in self.__value)
+        return "{%s}" % arr_str
+
+
 def _to_addr(worksheet, row, col, row_fixed=False, col_fixed=False):
     """converts a (0,0) based coordinate to an excel address"""
     addr = ""
